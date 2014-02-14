@@ -1,0 +1,19 @@
+<?php
+
+class Guild
+{
+	private $id;
+	private $name;
+	private $serverId;
+	private $allowedSim;
+
+	public function __construct($id, $name, $serverId, $allowedSim)
+	{
+		$this->id = $id;
+		$this->name = $name;
+		$this->serverId = $serverId;
+		$this->allowedSim = $allowedSim;
+	}
+}
+
+?>
