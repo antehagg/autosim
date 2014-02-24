@@ -1,15 +1,15 @@
 <?php
 
-class DbConnect
+class DbConnector
 {
-	private $myscli;
+	public $myscli;
 
 	public function __construct()
 	{
-		
+
 	}
 
-	private function connect($db)
+	public function connect($db)
 	{
 		$this->myscli = new mysqli("localhost","root","ch3f3n",$db);
 
@@ -22,16 +22,14 @@ class DbConnect
 		return true;
 	}
 
-	private function close()
+	public function close()
 	{
 		mysqli_close($this->myscli);
 	}
 
-	private function sqlQuery($query)
+	public function sqlQuery($query)
 	{
 		$result = $this->myscli->query($query);
-
-		$this->close();
 
 		return $result;
 	}
@@ -50,6 +48,8 @@ class DbConnect
 			while($row = $result->fetch_assoc())
 				$regionList[] = $row;
 
+			$this->close();
+
 			return $regionList;
 		}
 	}
@@ -67,6 +67,8 @@ class DbConnect
 
 			while($row = $result->fetch_assoc())
 				$regionList[] = $row;
+
+			$this->close();
 
 			return $regionList;
 		}
