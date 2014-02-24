@@ -13,17 +13,22 @@ class Character
 
 	private $characterDb;
 
-	public function __construct($name)
+	public function __construct($name, $region, $realm)
 	{
 		$this->name = $name;
-		$this->characterDb = new CharacterDb($name);
+		$this->realm = $realm;
+		$this->region = $region;
+		$this->characterDb = new CharacterDb($name, $region, $realm);
 		$charExist = $this->characterDb->checkIfExist();
 
 		if($charExist)
-			echo "it exist!";
+		{
+			echo "Updateing char!\n";
+			$this->characterDb->updateChar();
+		}
 		else
 			$this->characterDb->insertChar();
-	}
+	}	
 }
 
 ?>

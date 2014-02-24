@@ -3,7 +3,9 @@
 require_once = './includes/simulator/simulator.php';
 
 <html>
-	<INPUT TYPE = "Text" VALUE ="" NAME = "charname">
+	<body>
+		<INPUT TYPE = "Text" VALUE ="" NAME = "charname">
+	</body>
 </html>
 
 $char = $_POST['charname'];

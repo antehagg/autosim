@@ -2,6 +2,6 @@
 
 include 'character.php';
 
-$char = new Character("Overnuke");
+$char = new Character("Overnuke", "eu", "ravencrest");
 
 ?>

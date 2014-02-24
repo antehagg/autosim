@@ -10,12 +10,31 @@ class CharacterDb
 	private $link;
 	private $db;
 	private $name;
+	private $realm;
+	private $region;
+	private $charJson;
 
-	public function __construct($name)
+	private $realmId;
+	private $regionId;
+
+	public function __construct($name, $region, $realm)
 	{
 		$this->name = $name;
+		$this->region = $region;
+		$this->realm = $realm;
 		$this->link = new DbConnector();
 		$this->db = 'autosim_core';
+		$this->getIds();
+		$this->charJson = $this->getCharFromApi();
+	}
+
+	private function getIds()
+	{
+		$regionDb = new Regiondb();
+		$this->regionId = $regionDb->getRegionIdFromName($this->region);
+
+		$realmDb = new RealmDd();
+		$this->realmId = $realmDb->getRealmIdFromName($this->realm, $this->regionId);
 	}
 
 	public function checkIfExist()
@@ -34,11 +53,12 @@ class CharacterDb
 			return false;
 	}
 
-	public function getIdFromName($name, $regionId, $realmId, $guildId)
+	public function getIdFromName($name, $regionId, $realmId)
 	{
-		$this->link->connect($this->dbName);
+		$this->link->connect($this->db);
 
-		$sqlQuery = "SELECT id FROM guilds WHERE name = '$name' AND regionId = '$regionId' AND serverId = '$realmId' AND guildId = $guildId";
+		$sqlQuery = "SELECT id FROM `char` WHERE name = '$name' AND regionId = $regionId AND serverId = $realmId";
+		echo $sqlQuery;
 
 		$result = $this->link->sqlQuery($sqlQuery);
 
@@ -49,24 +69,46 @@ class CharacterDb
 		return $id[0];
 	}
 
-	public function insertChar()
+	private function getCharFromApi()
 	{
-		$url = "http://eu.battle.net/api/wow/character/ravencrest/" . $this->name . "?fields=items,guild";
+		$url = "http://" . $this->region . ".battle.net/api/wow/character/" . $this->realm . "/" . $this->name . "?fields=items,guild";
 		$jsonResult = file_get_contents($url);
 		$decodedresult = json_decode($jsonResult);
 
-		$region = 'eu';
-		$realm = $decodedresult->realm;
-		$itemLevel = $decodedresult->items->averageItemLevelEquipped;
-		$guild = $decodedresult->guild->name;
+		return $decodedresult;
+	}
 
-		var_dump($decodedresult);
+	public function updateChar()
+	{
+		$region = $this->region;
+		$realm = $this->realm;
+		$itemLevel = $this->charJson->items->averageItemLevelEquipped;
+		$guild = $this->charJson->guild->name;
 
-		$regionDb = new Regiondb();
-		$regionId = $regionDb->getRegionIdFromName($region);
+		$guildDb = new GuildDb();
+		$guildId = $guildDb->getGuildIdFromName('Volym', $this->regionId, $this->realmId);
 
-		$realmDb = new RealmDd();
-		$realmId = $realmDb->getRealmIdFromName('ravencrest', $regionId);
+		$charId = $this->getIdFromName($this->name, $this->regionId, $this->realmId);
+
+		$sqlUpdateChar = "UPDATE `char` SET itemLevel = $itemLevel ,guildid = $guildId
+		 WHERE id=$charId";
+
+		 echo $sqlUpdateChar;
+
+		 $this->link->connect($this->db);
+		 $this->link->sqlQuery($sqlUpdateChar);
+		 $this->link->close();
+	}
+
+	public function insertChar()
+	{
+		$region = $this->region;
+		$realm = $this->realm;
+		$itemLevel = $this->charJson->items->averageItemLevelEquipped;
+		$guild = $this->charJson->guild->name;
+
+		$realmId = $this->realmId;
+		$regionId = $this->regionId;
 
 		$guildDb = new GuildDb();
 		$guildId = $guildDb->getGuildIdFromName('Volym', $regionId, $realmId);
