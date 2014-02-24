@@ -4,14 +4,15 @@ require_once "../dbApi/characterDb.php";
 
 class Character
 {
-	private $name;
-	private $realm;
-	private $region;
+	public $id;
+	public $name;
+	public $realm;
+	public $region;
 	private $guild;
 	private $dpsHistory;
-	private $itemLevel;
+	public $itemLevel;
 
-	private $characterDb;
+	public $characterDb;
 
 	public function __construct($name, $region, $realm)
 	{
@@ -22,13 +23,21 @@ class Character
 		$charExist = $this->characterDb->checkIfExist();
 
 		if($charExist)
-		{
-			echo "Updateing char!\n";
 			$this->characterDb->updateChar();
-		}
 		else
+		{
 			$this->characterDb->insertChar();
+			$this->createDirectory();
+		}
+
+		$this->id = $this->characterDb->getIdFromName();
 	}	
+
+	private function createDirectory()
+	{
+		$path = "/var/www/html/autosim/simulations/" . $this->name;
+		mkdir($path, 0775);
+	}
 }
 
 ?>

@@ -9,13 +9,14 @@ class CharacterDb
 {
 	private $link;
 	private $db;
+	private $charId;
 	private $name;
 	private $realm;
 	private $region;
-	private $charJson;
+	public $charJson;
 
-	private $realmId;
-	private $regionId;
+	public $realmId;
+	public $regionId;
 
 	public function __construct($name, $region, $realm)
 	{
@@ -25,6 +26,7 @@ class CharacterDb
 		$this->link = new DbConnector();
 		$this->db = 'autosim_core';
 		$this->getIds();
+		$this->charId = $this->getIdFromName($this->name, $this->regionId, $this->realmId);
 		$this->charJson = $this->getCharFromApi();
 	}
 
@@ -53,12 +55,11 @@ class CharacterDb
 			return false;
 	}
 
-	public function getIdFromName($name, $regionId, $realmId)
+	public function getIdFromName()
 	{
 		$this->link->connect($this->db);
 
-		$sqlQuery = "SELECT id FROM `char` WHERE name = '$name' AND regionId = $regionId AND serverId = $realmId";
-		echo $sqlQuery;
+		$sqlQuery = "SELECT id FROM `char` WHERE name = '" . $this->name . "' AND regionId = " . $this->regionId . " AND serverId = " . $this->realmId;
 
 		$result = $this->link->sqlQuery($sqlQuery);
 
@@ -88,12 +89,8 @@ class CharacterDb
 		$guildDb = new GuildDb();
 		$guildId = $guildDb->getGuildIdFromName('Volym', $this->regionId, $this->realmId);
 
-		$charId = $this->getIdFromName($this->name, $this->regionId, $this->realmId);
-
 		$sqlUpdateChar = "UPDATE `char` SET itemLevel = $itemLevel ,guildid = $guildId
-		 WHERE id=$charId";
-
-		 echo $sqlUpdateChar;
+		 WHERE id=" . $this->charId;
 
 		 $this->link->connect($this->db);
 		 $this->link->sqlQuery($sqlUpdateChar);
@@ -115,8 +112,6 @@ class CharacterDb
 
 		$sqlInsertChar = "INSERT INTO `char`(`name`, `itemLevel`, `serverid`, `regionid`, `guildid`)
 		 VALUES ('" . $this->name . "',$itemLevel,$realmId,$regionId,$guildId)";
-
-		 echo $sqlInsertChar;
 
 		 $this->link->connect($this->db);
 		 $this->link->sqlQuery($sqlInsertChar);

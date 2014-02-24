@@ -1,7 +1,10 @@
 <?php
 
+include "../dbApi/dpsHistoryDb.php";
+
 class Simulator
 {
+	private $character;
 	private $name;
 	private $region;
 	private $server;
@@ -15,18 +18,17 @@ class Simulator
 
 	private $simcFileName;
 	private $outFileName;
+	private $fileName;
 
 	private $threads;
 
 	// Will be used later when there is a frontend to move output files to.
 	private $user;
 
-	public function __construct($name, $region, $server, $iterations, $calculate_scale_factors,
+	public function __construct($character, $iterations, $calculate_scale_factors,
 	 $reforge_plot_stat, $reforge_plot_amount, $reforge_plot_step)
 	{
-		$this->name = $name;
-		$this->region = $region;
-		$this->server = $server;
+		$this->character = $character;
 		$this->iterations = $iterations;
 		$this->calculate_scale_factors = $calculate_scale_factors;
 		$this->reforge_plot_stat = $reforge_plot_stat;	
@@ -43,17 +45,18 @@ class Simulator
 	{
 		date_default_timezone_set ("Europe/Stockholm");
 		$date = date('Ymdhis', time());
-		$outfileString = $this->name . $date . ".html";
+		$this->fileName = $this->character->name . $date;
+		$outfileString = "/var/www/html/autosim/simulations/" . $this->character->name . "/" . $this->character->name . $date . ".html";
 
 		return $outfileString;
 	}
 
 	private function createSimcFile()
 	{
-		$this->simcFileName = "/home/ahagglund/autosim/simulationcraft/profiles/autosim/" . $this->name . ".simc";
+		$this->simcFileName = "/var/www/html/autosim/simulationcraft/profiles/autosim/" . $this->character->name . ".simc";
 		$fileHandle = fopen($this->simcFileName, 'w') or die("can't open file");
 
-		$writeString = "armory=" . $this->region . "," . $this->server . "," . $this->name . "\n";
+		$writeString = "armory=" . $this->character->region . "," . $this->character->realm . "," . $this->character->name . "\n";
 		$writeString .= "calculate_scale_factors=" . $this->calculate_scale_factors . "\n";
 
 		$reforgePlotCheck = false;
@@ -65,7 +68,7 @@ class Simulator
 			$reforgePlotCheck = true;
 		}
 
-		if(($reforgePlotCheck &| $this->calculate_scale_factors == 1) && $this->iterations < 10000)
+		if(($reforgePlotCheck || $this->calculate_scale_factors == 1) && $this->iterations < 10000)
 		{
 			$this->iterations = 10000;
 			$this->threads = 4;
@@ -84,6 +87,11 @@ class Simulator
 	{
 		$command = "simc " . $this->simcFileName;
 		exec($command, $output);
+
+		$dpsArray = explode(" ", $output[11]);	
+
+		$dpsHistory = new DpsHistoryDb();
+		$dpsHistory->insertNewSim($this->character->id, $dpsArray[1], $this->fileName, $this->character->characterDb->charJson->items->averageItemLevelEquipped);
 	}
 }
 
