@@ -50,7 +50,7 @@ function simulate()
 		if(isset($_POST['scalefactors']))
 			$scalefactors = $_POST['scalefactors'];
 		else
-			$_SESSION['scalefactors'] = 0;
+			$scalefactors = 0;
 		if(isset($_POST['reforgeplot']))
 			$reforgeplot = $_POST['reforgeplot'];
 		if(isset($_POST['reforgeamount']))
@@ -61,14 +61,11 @@ function simulate()
 
 	$character = new Character($_SESSION['charname'], $_SESSION['region'], $_SESSION['server']);
 
-	var_dump($character);
-
 	$simulator = new Simulator($character, $iterations, $scalefactors, $reforgeplot, $reforgeamount, $reforgestep);
 
-	var_dump($simulator);
+	$simpagename = "http://localhost/autosim/simulations/" . $character->name . "/" . $simulator->fileName . ".html";
 
-	echo $simulator->outFileName;
-
+	echo "<a target = '_blank' href=\"$simpagename\">See result</a>";
 }
 
 ?>

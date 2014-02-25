@@ -18,7 +18,6 @@ class DbConnector
 			echo "Failed to connect to MySQL: " . $this->myscli->connect_error();
 			return false; 
 		}
-		echo "Connected\n";
 		return true;
 	}
 

@@ -18,7 +18,7 @@ class Simulator
 
 	private $simcFileName;
 	public $outFileName;
-	private $fileName;
+	public $fileName;
 
 	private $threads;
 
@@ -55,6 +55,7 @@ class Simulator
 	{
 		$this->simcFileName = "/var/www/html/autosim/simulationcraft/profiles/autosim/" . $this->character->name . ".simc";
 		$fileHandle = fopen($this->simcFileName, 'w') or die("can't open file");
+		chmod($this->simcFileName, 0777);
 
 		$writeString = "armory=" . $this->character->region . "," . $this->character->realm . "," . $this->character->name . "\n";
 		$writeString .= "calculate_scale_factors=" . $this->calculate_scale_factors . "\n";
