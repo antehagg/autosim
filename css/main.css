@@ -27,7 +27,6 @@
 {
 	width: 340px;
 	padding:10px;
-	border:5px solid gray;
 	margin:0px;
 }
 .mainboxelement
@@ -73,13 +72,11 @@ a:hover
 {
 	width: 305px;
 	padding:10px;
-	border:5px solid gray;
 	margin:0px;
 }
 #simBox
 {
 	width: 305px;
 	padding:10px;
-	border:5px solid gray;
 	margin:0px;
 }
