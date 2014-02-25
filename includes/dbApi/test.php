@@ -1,7 +1,7 @@
 <?php
+include '/var/www/html/autosim/includes/dbApi/dbconnect.php';
+require_once '/var/www/html/autosim/includes/dbClasses/region.php';
 
-include 'dbconnect.php';
-require_once '../dbClasses/region.php';
 
 $dbConnect = new DbConnect();
 

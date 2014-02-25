@@ -1,6 +1,6 @@
 <?php
 
-include "../dbApi/dpsHistoryDb.php";
+include "/var/www/html/autosim/includes/dbApi/dpsHistoryDb.php";
 
 class Simulator
 {
@@ -17,7 +17,7 @@ class Simulator
 	private $reforge_plot_step;
 
 	private $simcFileName;
-	private $outFileName;
+	public $outFileName;
 	private $fileName;
 
 	private $threads;

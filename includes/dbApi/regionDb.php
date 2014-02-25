@@ -1,6 +1,6 @@
 <?php
 
-require_once 'dbconnect.php';
+require_once '/var/www/html/autosim/includes/dbApi/dbconnect.php';
 
 class RegionDb
 {

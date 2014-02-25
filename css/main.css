@@ -1,16 +1,85 @@
-div.mainbox
+.container
 {
-	width:305px;
+	width:800px;
+	padding:10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.header
+{
+	margin-left: auto;
+	margin-right: auto;
+	padding:10px;
+}
+.menubox
+{
+	padding:10px;
+	margin:0px;
+}
+.mainbox
+{
+	background-color: white;
+	min-height: 500px;
+	padding:10px;
+	margin:0px;
+}
+#loginbox
+{
+	width: 305px;
 	padding:10px;
 	border:5px solid gray;
 	margin:0px;
 }
 .mainboxelement
 {
-	position:left;
+	margin-left: 30px;
 	width:200px;
 }
 .alignright
 {
 	float:right;
+}
+.h1
+{
+	color:white;
+	font-size:40px;
+}
+.navilistitem
+{
+	float:left;
+}
+.navibuttons
+{
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #98bf21;
+	text-align: center;
+	padding: 4px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+a:hover
+{ 
+	background-color:green;
+}
+.navilist
+{
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	overflow:hidden;
+}
+#activeChar
+{
+	width: 305px;
+	padding:10px;
+	border:5px solid gray;
+	margin:0px;
+}
+#simBox
+{
+	width: 305px;
+	padding:10px;
+	border:5px solid gray;
+	margin:0px;
 }

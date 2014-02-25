@@ -1,9 +1,9 @@
 <?php
 
-require_once 'dbconnect.php';
-include 'regionDb.php';
-include 'guildDb.php';
-include 'realmDb.php';
+require_once '/var/www/html/autosim/includes/dbApi/dbconnect.php';
+include '/var/www/html/autosim/includes/dbApi/regionDb.php';
+include '/var/www/html/autosim/includes/dbApi/guildDb.php';
+include '/var/www/html/autosim/includes/dbApi/realmDb.php';
 
 class CharacterDb
 {

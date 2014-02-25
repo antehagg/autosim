@@ -1,6 +1,6 @@
 <?php
 
-require_once "../dbApi/characterDb.php";
+require_once "/var/www/html/autosim/includes/dbApi/characterDb.php";
 
 class Character
 {
