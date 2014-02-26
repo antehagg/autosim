@@ -36,7 +36,7 @@ class Character
 	private function createDirectory()
 	{
 		$path = "/var/www/html/autosim/simulations/" . $this->name;
-		mkdir($path, 0775);
+		mkdir($path, 0777);
 	}
 }
 

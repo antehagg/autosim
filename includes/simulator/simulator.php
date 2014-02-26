@@ -58,6 +58,7 @@ class Simulator
 		chmod($this->simcFileName, 0777);
 
 		$writeString = "armory=" . $this->character->region . "," . $this->character->realm . "," . $this->character->name . "\n";
+
 		$writeString .= "calculate_scale_factors=" . $this->calculate_scale_factors . "\n";
 
 		$reforgePlotCheck = false;

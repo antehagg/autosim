@@ -50,7 +50,7 @@
 							</tr>
 							<tr>
 								<td>Scalefactors:</td>
-								<td><input type="checkbox" name="scalefactors" value="No"></td>
+								<td><input type="checkbox" name="scalefactors" value="Yes"></td>
 							</tr>
 							<tr>
 								<td>Reforgeplot</td>
