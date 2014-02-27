@@ -20,8 +20,8 @@ class DpsHistoryDb
 
 	public function insertNewSim($charId, $dps, $html, $itemLevel)
 	{
-		 $sqlInsertQuery = "INSERT INTO `dpsHistory`(`charId`, `dps`, `html`, `itemLevel`)
-		 VALUES ($charId, $dps,'$html',$itemLevel)";
+		 $sqlInsertQuery = "INSERT INTO `dpsHistory`(`charId`, `dps`, `html`, `itemLevel`, `date`, `time`)
+		 VALUES ($charId, $dps,'$html',$itemLevel, CURDATE(), CURTIME())";
 
 		 $this->link->connect($this->db);
 		 $this->link->sqlQuery($sqlInsertQuery);
