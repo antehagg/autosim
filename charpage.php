@@ -103,7 +103,7 @@ function drawHistoryBox($items)
 	$counter = 1;
 	foreach($dpsHistory as $historyRow)
 	{
-		if($counter == $items)
+		if($counter > $items)
 			break;
 		echo "<tr><td>" . $historyRow['dps'] . "</td><td> " . $historyRow['date'] . "</td><td> " . $historyRow['time'] . "</td><td> ";
 
