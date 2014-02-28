@@ -33,6 +33,7 @@
 								<td><select name="server" class="mainboxelement">
 								    <option value="ravencrest">Ravencrest</option>
 								    <option value="auchindoun">Auchindoun</option>
+								    <option value="stormscale">Stormscale</option>
 								 </select></td>
 							</tr>
 							<tr>
