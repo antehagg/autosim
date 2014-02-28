@@ -30,7 +30,7 @@ class DpsHistoryDb
 
 	public function getHistoryFromCharId($charId)
 	{
-		$sqlGetHistory = "SELECT * FROM dpsHistory WHERE charId=$charId";
+		$sqlGetHistory = "SELECT * FROM dpsHistory WHERE charId=$charId ORDER BY `date` DESC";
 
 		$this->link->connect($this->db);
 		

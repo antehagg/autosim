@@ -73,12 +73,12 @@
 						</table>
 					</form>
 				</div>
-				<div id="historyBox">
+				<div>
 					<?php
 						require_once "/var/www/html/autosim/includes/dbApi/characterDb.php";
 						require_once "/var/www/html/autosim/includes/dbApi/dpsHistoryDb.php";
 
-						drawHistoryBox();
+						drawHistoryBox(10);
 					?>
 				</div>
 			</div>
@@ -88,7 +88,7 @@
 
 <?php
 
-function drawHistoryBox()
+function drawHistoryBox($items)
 {
 	$charDb = new CharacterDb($_SESSION['charname'], $_SESSION['region'], $_SESSION['server']);
 	$charId = $charDb->getIdFromName();
@@ -97,12 +97,22 @@ function drawHistoryBox()
 	$dpsHistory = $dpsHistoryDb->getHistoryFromCharId($charId);
 
 	echo "Dpshistory<br>";
+	echo "<table class=\"CSSTableGenerator\">";
+	echo "<tr><td>DPS</td><td> Date</td><td> Time</td><td> Link</td></tr>";
+
+	$counter = 1;
 	foreach($dpsHistory as $historyRow)
 	{
-		echo $historyRow['dps'] . " " . $historyRow['date'] . " " . $historyRow['time'] . " ";
+		if($counter == $items)
+			break;
+		echo "<tr><td>" . $historyRow['dps'] . "</td><td> " . $historyRow['date'] . "</td><td> " . $historyRow['time'] . "</td><td> ";
+
 		$simpagename = "simulations/" . $_SESSION['charname'] . "/" . $historyRow['html'] . ".html";
-		echo "<a target = '_blank' href=\"$simpagename\">See simulation</a>";
+
+		echo "<a target = '_blank' href=\"$simpagename\">See simulation</a></td></tr>";
+		$counter++;
 	}
+	echo "</table>";
 }
 
 function drawCharBox()
