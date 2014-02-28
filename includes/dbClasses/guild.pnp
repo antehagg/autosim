@@ -8,12 +8,11 @@ class Guild
 	private $allowedSim;
 	private $members;
 
-	public function __construct($id, $name, $serverId, $allowedSim)
+	public function __construct($id, $name, $serverId)
 	{
 		$this->id = $id;
 		$this->name = $name;
 		$this->serverId = $serverId;
-		$this->allowedSim = $allowedSim;
 	}
 }
 

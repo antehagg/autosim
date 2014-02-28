@@ -72,21 +72,6 @@ class DbConnector
 			return $regionList;
 		}
 	}
-
-	public function insertRegion($region)
-	{
-
-	}
-
-	public function insertServer($server)
-	{
-
-	}
-
-	public function getGuildWithId($id)
-	{
-
-	}
 }
 
 ?>

@@ -86,8 +86,8 @@ class CharacterDb
 		$itemLevel = $this->charJson->items->averageItemLevelEquipped;
 		$guild = $this->charJson->guild->name;
 
-		$guildDb = new GuildDb();
-		$guildId = $guildDb->getGuildIdFromName('Volym', $this->regionId, $this->realmId);
+		$guildDb = new GuildDb($guild, $this->regionId, $this->realmId);
+		$guildId = $guildDb->getGuildIdFromName();
 
 		$sqlUpdateChar = "UPDATE `char` SET itemLevel = $itemLevel ,guildid = $guildId
 		 WHERE id=" . $this->charId;
@@ -107,11 +107,18 @@ class CharacterDb
 		$realmId = $this->realmId;
 		$regionId = $this->regionId;
 
-		$guildDb = new GuildDb();
-		$guildId = $guildDb->getGuildIdFromName('Volym', $regionId, $realmId);
+		if(isset($guild))
+		{
+			$guildDb = new GuildDb($guild, $regionId, $realmId);
+			$guildId = $guildDb->getGuildIdFromName();
 
-		$sqlInsertChar = "INSERT INTO `char`(`name`, `itemLevel`, `serverid`, `regionid`, `guildid`)
-		 VALUES ('" . $this->name . "',$itemLevel,$realmId,$regionId,$guildId)";
+
+			$sqlInsertChar = "INSERT INTO `char`(`name`, `itemLevel`, `serverid`, `regionid`, `guildid`)
+		 		VALUES ('" . $this->name . "',$itemLevel,$realmId,$regionId,$guildId)";
+		}
+		else
+			$sqlInsertChar = "INSERT INTO `char`(`name`, `itemLevel`, `serverid`, `regionid`, `guildid`)
+		 		VALUES ('" . $this->name . "',$itemLevel,$realmId,$regionId, 0)";
 
 		 $this->link->connect($this->db);
 		 $this->link->sqlQuery($sqlInsertChar);
