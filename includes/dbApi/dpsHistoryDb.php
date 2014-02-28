@@ -27,6 +27,25 @@ class DpsHistoryDb
 		 $this->link->sqlQuery($sqlInsertQuery);
 		 $this->link->close();
 	}
+
+	public function getHistoryFromCharId($charId)
+	{
+		$sqlGetHistory = "SELECT * FROM dpsHistory WHERE charId=$charId";
+
+		$this->link->connect($this->db);
+		
+
+		$result = $this->link->sqlQuery($sqlGetHistory);
+
+		$dpsHistory = array();
+
+		while($row = $result->fetch_assoc())
+			$dpsHistory[] = $row;
+
+		$this->link->close();
+
+		return $dpsHistory;
+	}
 }
 
 ?>

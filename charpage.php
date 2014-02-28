@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+
+
 <html>
 	<head>
 		<style>
@@ -71,12 +73,38 @@
 						</table>
 					</form>
 				</div>
+				<div id="historyBox">
+					<?php
+						require_once "/var/www/html/autosim/includes/dbApi/characterDb.php";
+						require_once "/var/www/html/autosim/includes/dbApi/dpsHistoryDb.php";
+
+						drawHistoryBox();
+					?>
+				</div>
 			</div>
 		</div>
 	</body>
 </html>
 
 <?php
+
+function drawHistoryBox()
+{
+	$charDb = new CharacterDb($_SESSION['charname'], $_SESSION['region'], $_SESSION['server']);
+	$charId = $charDb->getIdFromName();
+
+	$dpsHistoryDb = new DpsHistoryDb();
+	$dpsHistory = $dpsHistoryDb->getHistoryFromCharId($charId);
+
+	echo "Dpshistory<br>";
+	foreach($dpsHistory as $historyRow)
+	{
+		echo $historyRow['dps'] . " " . $historyRow['date'] . " " . $historyRow['time'] . " ";
+		$simpagename = "simulations/" . $_SESSION['charname'] . "/" . $historyRow['html'] . ".html";
+		echo "<a target = '_blank' href=\"$simpagename\">See simulation</a>";
+	}
+}
+
 function drawCharBox()
 {
 	echo "Active char: " . $_SESSION['charname'] . "<br>";
