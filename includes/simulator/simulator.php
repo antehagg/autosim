@@ -101,8 +101,14 @@ class Simulator
 
 		$dpsArray = explode(" ", $output[11]);	
 
+		if(count($dpsArray) == 5)
+			$dps = $dpsArray[1];
+		elseif(count($dpsArray) == 6)
+			$dps = $dpsArray[2];
+
 		$dpsHistory = new DpsHistoryDb();
-		$dpsHistory->insertNewSim($this->character->id, $dpsArray[1], $this->fileName, $this->character->characterDb->charJson->items->averageItemLevelEquipped);
+
+		$dpsHistory->insertNewSim($this->character->id, $dps, $this->fileName, $this->character->characterDb->charJson->items->averageItemLevelEquipped);
 	}
 }
 

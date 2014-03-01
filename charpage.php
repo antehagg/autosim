@@ -73,7 +73,7 @@
 							</tr>
 						</table>					
 
-						<textarea type="textarea" class="floatright" id="amrTextArea" name="amrText" value="" cols="45" rows="10"></textarea>
+						<textarea type="textarea" class="floatright" id="amrTextArea" name="amrText" value="" cols="45" rows="8"></textarea>
 					</form>
 				</div>
 				<div id="dpsHistoryBox">

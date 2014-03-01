@@ -32,8 +32,7 @@ class DpsHistoryDb
 	{
 		$sqlGetHistory = "SELECT * FROM dpsHistory WHERE charId=$charId ORDER BY `date` DESC";
 
-		$this->link->connect($this->db);
-		
+		$this->link->connect($this->db);		
 
 		$result = $this->link->sqlQuery($sqlGetHistory);
 
