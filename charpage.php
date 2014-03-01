@@ -45,7 +45,8 @@
 				</div>
 				<div id="simBox">
 					<form action="simulate.php" method="post">
-						<table>
+
+						<table class="floatleft">
 							<tr>
 								<td>Iterations:</td>
 								<td><input type="text" name="iterations" value="1000"></td>
@@ -70,10 +71,12 @@
 								<td></td>
 								<td><input class="alignright" type="submit" value="Submit"></td>
 							</tr>
-						</table>
+						</table>					
+
+						<textarea type="textarea" class="floatright" id="amrTextArea" name="amrText" value="" cols="45" rows="10"></textarea>
 					</form>
 				</div>
-				<div>
+				<div id="dpsHistoryBox">
 					<?php
 						require_once "/var/www/html/autosim/includes/dbApi/characterDb.php";
 						require_once "/var/www/html/autosim/includes/dbApi/dpsHistoryDb.php";
@@ -96,7 +99,7 @@ function drawHistoryBox($items)
 	$dpsHistoryDb = new DpsHistoryDb();
 	$dpsHistory = $dpsHistoryDb->getHistoryFromCharId($charId);
 
-	echo "Dpshistory<br>";
+	echo "<p class=\"floatleft\">Dpshistory</p><br>";
 	echo "<table class=\"CSSTableGenerator\">";
 	echo "<tr><td>DPS</td><td> Date</td><td> Time</td><td> Link</td></tr>";
 

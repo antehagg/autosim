@@ -68,6 +68,19 @@ a:hover
 	padding:0;
 	overflow:hidden;
 }
+.floatleft
+{
+	float:left;
+}
+.floatright
+{
+	float:right;
+}
+#dpsHistoryBox
+{
+	padding:10px;
+	margin: 200px 0px 0px 0px;
+}
 #activeChar
 {
 	width: 305px;
@@ -76,10 +89,17 @@ a:hover
 }
 #simBox
 {
-	width: 305px;
+	float: left;
+	width: auto;
 	padding:10px;
 	margin:0px;
 }
+
+#amrTextArea
+{
+	margin: 0px 0px 0px 10px;
+}
+
 #historyBox
 {
 	width: 505px;

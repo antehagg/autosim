@@ -15,6 +15,7 @@ class Simulator
 	private $reforge_plot_stat;
 	private $reforge_plot_amount;
 	private $reforge_plot_step;
+	private $amrText;
 
 	private $simcFileName;
 	public $outFileName;
@@ -25,9 +26,10 @@ class Simulator
 	// Will be used later when there is a frontend to move output files to.
 	private $user;
 
-	public function __construct($character, $iterations, $calculate_scale_factors,
+	public function __construct($character, $iterations, $amrText ,$calculate_scale_factors,
 	 $reforge_plot_stat, $reforge_plot_amount, $reforge_plot_step)
 	{
+		$this->amrText = $amrText;
 		$this->character = $character;
 		$this->iterations = $iterations;
 		$this->calculate_scale_factors = $calculate_scale_factors;
@@ -57,7 +59,10 @@ class Simulator
 		$fileHandle = fopen($this->simcFileName, 'w') or die("can't open file");
 		chmod($this->simcFileName, 0777);
 
-		$writeString = "armory=" . $this->character->region . "," . $this->character->realm . "," . $this->character->name . "\n";
+		if($this->amrText == '' || !isset($this->amrText))
+			$writeString = "armory=" . $this->character->region . "," . $this->character->realm . "," . $this->character->name . "\n";
+		else
+			$writeString = $this->amrText . "\n";
 
 		$writeString .= "calculate_scale_factors=" . $this->calculate_scale_factors . "\n";
 
@@ -75,6 +80,10 @@ class Simulator
 			$this->iterations = 10000;
 			$this->threads = 4;
 		}
+
+		//make sure we dont sim stupidly high iterations
+		if($this->iterations > 10000)
+			$this->iterations = 10000;
 
 		$writeString .= "threads=" . $this->threads . "\n";
 		$writeString .= "iterations=" . $this->iterations . "\n";

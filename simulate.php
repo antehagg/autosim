@@ -60,11 +60,13 @@ function simulate()
 			$reforgeamount = $_POST['reforgeamount'];
 		if(isset($_POST['reforgestep']))
 			$reforgestep = $_POST['reforgestep'];
+		if(isset($_POST['amrText']))
+			$amrText = $_POST['amrText'];
 	}
 
 	$character = new Character($_SESSION['charname'], $_SESSION['region'], $_SESSION['server']);
 
-	$simulator = new Simulator($character, $iterations, $scalefactors, $reforgeplot, $reforgeamount, $reforgestep);
+	$simulator = new Simulator($character, $iterations, $amrText, $scalefactors, $reforgeplot, $reforgeamount, $reforgestep);
 
 	$simpagename = "simulations/" . $character->name . "/" . $simulator->fileName . ".html";
 
