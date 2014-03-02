@@ -31,15 +31,33 @@
 							<tr>
 								<td>Server:</td>
 								<td><select name="server" class="mainboxelement">
-								    <option value="ravencrest">Ravencrest</option>
-								    <option value="auchindoun">Auchindoun</option>
-								    <option value="stormscale">Stormscale</option>
+								<?php
+									require_once "/var/www/html/autosim/includes/dbApi/realmDb.php";
+									$realmDb = new RealmDb();
+									$realmNames = $realmDb->getRealmNames();
+
+									foreach($realmNames as $realmName)
+									{
+										if($realmName != 'None')
+											echo "<option value=\"$realmName\">$realmName</option>";
+									}
+								?>
 								 </select></td>
 							</tr>
 							<tr>
 								<td>Region:</td>
 								<td><select name="region" class="mainboxelement">
-								    <option value="eu">Eu</option>
+								<?php
+									require_once "/var/www/html/autosim/includes/dbApi/regionDb.php";
+									$regionDb = new RegionDb();
+									$regionNames = $regionDb->getRegionNames();
+
+									foreach($regionNames as $regionName)
+									{
+										if($regionName != 'None')
+											echo "<option value=\"$regionName\">$regionName</option>";
+									}
+								?>
 								 </select></td>
 							</tr>
 							<tr>
@@ -53,4 +71,6 @@
 		</div>
 	</body>
 </html>
+
+
 

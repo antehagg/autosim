@@ -15,6 +15,26 @@ class RegionDb
 		$this->link = new DbConnector();
 	}
 
+	public function getRegionNames()
+	{
+		$this->link->connect($this->dbName);
+
+		$sqlQuery = "SELECT name FROM regions";
+
+		echo $sqlQuery;
+
+		$result = $this->link->sqlQuery($sqlQuery);
+
+		$regionList = array();
+
+		while($row = $result->fetch_assoc())
+			$regionList[] = $row['name'];
+
+		$this->link->close();
+
+		return $regionList;
+	}
+
 	public function getRegionIdFromName($name)
 	{
 		$this->link->connect($this->dbName);

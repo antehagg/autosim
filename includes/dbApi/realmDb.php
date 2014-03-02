@@ -2,7 +2,7 @@
 
 require_once '/var/www/html/autosim/includes/dbApi/dbconnect.php';
 
-class RealmDd
+class RealmDb
 {
 	private $id;
 	private $name;
@@ -15,6 +15,26 @@ class RealmDd
 	{
 		$this->dbName = 'autosim_core';
 		$this->link = new DbConnector();
+	}
+
+	public function getRealmNames()
+	{
+		$this->link->connect($this->dbName);
+
+		$sqlQuery = "SELECT name FROM servers";
+
+		echo $sqlQuery;
+
+		$result = $this->link->sqlQuery($sqlQuery);
+
+		$realmList = array();
+
+		while($row = $result->fetch_assoc())
+			$realmList[] = $row['name'];
+
+		$this->link->close();
+
+		return $realmList;
 	}
 
 	public function getRealmIdFromName($name, $regionId)

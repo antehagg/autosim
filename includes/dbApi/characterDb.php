@@ -35,7 +35,7 @@ class CharacterDb
 		$regionDb = new Regiondb();
 		$this->regionId = $regionDb->getRegionIdFromName($this->region);
 
-		$realmDb = new RealmDd();
+		$realmDb = new RealmDb();
 		$this->realmId = $realmDb->getRealmIdFromName($this->realm, $this->regionId);
 	}
 
