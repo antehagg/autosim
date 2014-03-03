@@ -1,6 +1,7 @@
 <?php
 
 require_once "/var/www/html/autosim/includes/dbApi/characterDb.php";
+require_once "/var/www/html/autosim/includes/dbClasses/guild.php";
 
 class Character
 {
@@ -8,19 +9,32 @@ class Character
 	public $name;
 	public $realm;
 	public $region;
-	private $guild;
-	private $dpsHistory;
-	public $itemLevel;
+
+	public $regionId;
+	public $realmId;
 
 	public $characterDb;
+	public $guild;
 
 	public function __construct($name, $region, $realm)
 	{
 		$this->name = $name;
 		$this->realm = $realm;
 		$this->region = $region;
+		
 		$this->characterDb = new CharacterDb($name, $region, $realm);
 		$charExist = $this->characterDb->checkIfExist();
+
+		$regionDb = new RegionDb();
+		$realmDb = new RealmDb();
+
+		$this->regionId = $regionDb->getRegionIdFromName($region);
+		$this->realmId = $realmDb->getRealmIdFromName($realm, $this->regionId);
+		
+		
+		$this->guild = new Guild($this->characterDb->charJson->guild->name, $this->realmId, $this->regionId);
+
+
 
 		if($charExist)
 			$this->characterDb->updateChar();

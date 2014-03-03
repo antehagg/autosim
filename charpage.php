@@ -20,6 +20,7 @@
 				<ul class="navilist">
 					<li class="navilistitem"><a class="navibuttons" href="index.php">Home</a></li>
 					<li class="navilistitem"><a class="navibuttons" href="charpage.php">Character</a></li>
+					<li class="navilistitem"><a class="navibuttons" href="guildpage.php">Guild</a></li>
 				</ul>
 			</div>
 			<div class="mainbox">
@@ -78,7 +79,7 @@
 				</div>
 				<div id="dpsHistoryBox">
 					<?php
-						require_once "/var/www/html/autosim/includes/dbApi/characterDb.php";
+						require_once "/var/www/html/autosim/includes/dbClasses/character.php";
 						require_once "/var/www/html/autosim/includes/dbApi/dpsHistoryDb.php";
 
 						drawHistoryBox(10);
@@ -93,8 +94,9 @@
 
 function drawHistoryBox($items)
 {
-	$charDb = new CharacterDb($_SESSION['charname'], $_SESSION['region'], $_SESSION['server']);
-	$charId = $charDb->getIdFromName();
+	$character = new Character($_SESSION['charname'], $_SESSION['region'], $_SESSION['server']);
+	$charId = $character->characterDb->getIdFromName();
+	$_SESSION['character'] = $character;
 
 	$dpsHistoryDb = new DpsHistoryDb();
 	$dpsHistory = $dpsHistoryDb->getHistoryFromCharId($charId);

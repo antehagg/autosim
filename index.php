@@ -18,6 +18,7 @@
 				<ul class="navilist">
 					<li class="navilistitem"><a class="navibuttons" href="index.php">Home</a></li>
 					<li class="navilistitem"><a class="navibuttons" href="charpage.php">Character</a></li>
+					<li class="navilistitem"><a class="navibuttons" href="guildpage.php">Guild</a></li>
 				</ul>
 			</div>
 			<div class="mainbox">

@@ -23,8 +23,6 @@ class RealmDb
 
 		$sqlQuery = "SELECT name FROM servers";
 
-		echo $sqlQuery;
-
 		$result = $this->link->sqlQuery($sqlQuery);
 
 		$realmList = array();
@@ -41,7 +39,9 @@ class RealmDb
 	{
 		$this->link->connect($this->dbName);
 
-		$sqlQuery = "SELECT id FROM ". $this->dbName . ".servers WHERE name = '$name' AND regionId = '$regionId'";
+		$name = str_replace("'", "\'", $name);
+
+		$sqlQuery = "SELECT id FROM ". $this->dbName . ".servers WHERE name = '$name' AND regionId = $regionId";
 
 		$result = $this->link->sqlQuery($sqlQuery);
 

@@ -18,6 +18,7 @@
 				<ul class="navilist">
 					<li class="navilistitem"><a class="navibuttons" href="index.php">Home</a></li>
 					<li class="navilistitem"><a class="navibuttons" href="charpage.php">Character</a></li>
+					<li class="navilistitem"><a class="navibuttons" href="guildpage.php">Guild</a></li>
 				</ul>
 			</div>
 			<div class="mainbox">
@@ -64,7 +65,16 @@ function simulate()
 			$amrText = $_POST['amrText'];
 	}
 
-	$character = new Character($_SESSION['charname'], $_SESSION['region'], $_SESSION['server']);
+	if(isset($_SESSION['character']))
+	{
+		$character = $_SESSION['character'];
+		echo 'hej';
+	}
+	else
+	{
+		$character = new Character($_SESSION['charname'], $_SESSION['region'], $_SESSION['server']);
+		echo 'hej hå';
+	}
 
 	$simulator = new Simulator($character, $iterations, $amrText, $scalefactors, $reforgeplot, $reforgeamount, $reforgestep);
 

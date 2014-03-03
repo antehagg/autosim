@@ -18,7 +18,7 @@ class CharacterDb
 	public $realmId;
 	public $regionId;
 
-	public function __construct($name, $region, $realm)
+		public function __construct($name, $region, $realm)
 	{
 		$this->name = $name;
 		$this->region = $region;
@@ -109,7 +109,7 @@ class CharacterDb
 
 		if(isset($guild))
 		{
-			$guildDb = new GuildDb($guild, $regionId, $realmId);
+			$guildDb = new GuildDb($guild, $realmId, $regionId);
 			$guildId = $guildDb->getGuildIdFromName();
 
 
@@ -119,6 +119,8 @@ class CharacterDb
 		else
 			$sqlInsertChar = "INSERT INTO `char`(`name`, `itemLevel`, `serverid`, `regionid`, `guildid`)
 		 		VALUES ('" . $this->name . "',$itemLevel,$realmId,$regionId, 0)";
+
+		echo $sqlInsertChar;
 
 		 $this->link->connect($this->db);
 		 $this->link->sqlQuery($sqlInsertChar);

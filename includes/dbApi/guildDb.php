@@ -12,13 +12,14 @@ class GuildDb
 	private $dbName;
 	private $link;
 
-	public function __construct($name, $regionId, $realmId)
+	public function __construct($name, $realmId, $regionId)
 	{
 		$this->name = $name;
 		$this->regionId = $regionId;
 		$this->realmId = $realmId;
 		$this->dbName = 'autosim_core';
 		$this->link = new DbConnector();
+		$this->id = $this->getGuildIdFromName();
 
 		$guildExist = $this->checkIfGuildExist();
 
@@ -57,8 +58,8 @@ class GuildDb
 	{
 		$this->link->connect($this->dbName);
 
-		$sqlQuery = "SELECT id FROM guilds WHERE name = '" . $this->name . "' AND regionId = '" . $this->regionId . "' AND serverId = '"
-		 . $this->realmId . "'";
+		$sqlQuery = "SELECT id FROM guilds WHERE name = '" . $this->name . "' AND regionId = " . $this->regionId . " AND serverId = "
+		 . $this->realmId;
 
 		$result = $this->link->sqlQuery($sqlQuery);
 
@@ -67,6 +68,24 @@ class GuildDb
 		$this->link->close();
 
 		return $id[0];
+	}
+
+	public function getGuildMembers()
+	{
+		$this->link->connect($this->dbName);
+
+		$sqlQuery = "SELECT name FROM `char` WHERE guildid=" . $this->id;
+
+		$result = $this->link->sqlQuery($sqlQuery);
+
+		$guildMembers = array();
+
+		while($row = $result->fetch_assoc())
+			$guildMembers[] = $row['name'];
+
+		$this->link->close();
+
+		return $guildMembers;
 	}
 }
 
